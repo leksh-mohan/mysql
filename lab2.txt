@@ -1,0 +1,48 @@
+CREATE TABLE users ( 
+    id INT NOT NULL AUTO_INCREMENT, 
+    fname VARCHAR(50) NOT NULL, 
+    lname VARCHAR(50), 
+    phone_no INT(20) NOT NULL, 
+    email_id VARCHAR(200) NOT NULL, 
+    password VARCHAR(100) NOT NULL, 
+    profile_pic VARCHAR(1000), 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE complaints(
+    complaint_id INT NOT NULL AUTO_INCREMENT,
+    user_id INT,
+    complaint VARCHAR(1000) NOT NULL,
+    complaint_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('completed', 'inprogress', 'stuck','closed','unread') DEFAULT 'unread',
+    PRIMARY KEY (complaint_id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE employees ( 
+    employee_id INT NOT NULL AUTO_INCREMENT, 
+    fname VARCHAR(50) NOT NULL, 
+    lname VARCHAR(50), 
+    phone_no INT(20) NOT NULL, 
+    email_id VARCHAR(200) NOT NULL, 
+    password VARCHAR(100) NOT NULL, 
+    profile_pic VARCHAR(1000), 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    type ENUM('agent','employee') DEFAULT 'employee',
+    PRIMARY KEY (employee_id)
+);
+
+CREATE TABLE complaint_solving ( 
+    id INT NOT NULL AUTO_INCREMENT, 
+    complaint_id INT,
+    status ENUM('completed', 'inprogress', 'stuck','closed') DEFAULT 'inprogress',
+    statusmarked_by INT,
+    statusmarked_by_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    assigned_to INT,
+    assigned_by INT,
+    assigned_by_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (complaint_id) REFERENCES complaints(complaint_id),
+    FOREIGN KEY (assigned_to,assigned_by,statusmarked_by) REFERENCES complaints(employee_id,employee_id,employee_id)
+);
