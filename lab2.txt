@@ -44,5 +44,7 @@ CREATE TABLE complaint_solving (
     assigned_by_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (complaint_id) REFERENCES complaints(complaint_id),
-    FOREIGN KEY (assigned_to,assigned_by,statusmarked_by) REFERENCES employees(employee_id,employee_id,employee_id)
+    FOREIGN KEY (assigned_to) REFERENCES employees(employee_id),
+    FOREIGN KEY (assigned_by) REFERENCES employees(employee_id),
+    FOREIGN KEY (statusmarked_by) REFERENCES employees(employee_id)
 );
